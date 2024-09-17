@@ -12,4 +12,3 @@ public static class LogAnalysis
 
     public static string LogLevel(this string str) => str.SubstringBetween("[", "]");
 }
-
