@@ -1,24 +1,21 @@
 using System;
-using System.Globalization;
 
 static class Appointment
 {
-    private static readonly string APPOINTMENT_FMT = "M/d/yyyy h:mm:ss tt";
-
-    private static readonly TimeSpan AFTERNOON_START = new TimeSpan(12, 0, 0);
-    private static readonly TimeSpan AFTERNOON_END = new TimeSpan(18, 0, 0);
+    private static readonly int AFTERNOON_START = 12;
+    private static readonly int AFTERNOON_END = 18;
+    private static readonly DateTime ANNIVERSARY = new DateTime(DateTime.Now.Year, 9, 15);
 
     public static DateTime Schedule(string appointmentDateDescription) =>
-        DateTime.Parse(appointmentDateDescription, CultureInfo.CurrentCulture);
+        DateTime.Parse(appointmentDateDescription);
 
-    public static bool HasPassed(DateTime appointmentDate) =>
-        appointmentDate.CompareTo(DateTime.Now) < 0;
+    public static bool HasPassed(DateTime appointmentDate) => DateTime.Now > appointmentDate;
 
     public static bool IsAfternoonAppointment(DateTime appointmentDate) =>
-        appointmentDate.TimeOfDay >= AFTERNOON_START && appointmentDate.TimeOfDay < AFTERNOON_END;
+        appointmentDate.Hour >= AFTERNOON_START && appointmentDate.Hour < AFTERNOON_END;
 
     public static string Description(DateTime appointmentDate) =>
-        $"You have an appointment on {appointmentDate.ToString(APPOINTMENT_FMT)}.";
+        $"You have an appointment on {appointmentDate}.";
 
-    public static DateTime AnniversaryDate() => new DateTime(DateTime.Now.Year, 9, 15);
+    public static DateTime AnniversaryDate() => ANNIVERSARY;
 }
