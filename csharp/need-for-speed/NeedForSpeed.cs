@@ -26,8 +26,8 @@ class RemoteControlCar
     {
         if (!BatteryDrained())
         {
-            this._metersDriven = this._metersDriven + this._speed;
-            this._batteryLevel = this._batteryLevel - this._batteryDrain;
+            this._metersDriven += this._speed;
+            this._batteryLevel -= this._batteryDrain;
         }
     }
 
@@ -46,7 +46,7 @@ class RaceTrack
 
     public bool TryFinishTrack(RemoteControlCar car)
     {
-        while (!car.BatteryDrained())
+        while (!car.BatteryDrained() && car.DistanceDriven() <= this._distance)
         {
             car.Drive();
         }
