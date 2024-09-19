@@ -14,14 +14,11 @@ class BirdCount
         this._todaysCount = birdsPerDay.Length - 1;
     }
 
-    public static int[] LastWeek() => [0, 2, 5, 3, 7, 8, 4];
+    public static int[] LastWeek() => new[] { 0, 2, 5, 3, 7, 8, 4 };
 
     public int Today() => this._birdsPerDay[this._todaysCount];
 
-    public void IncrementTodaysCount()
-    {
-        this._birdsPerDay[this._todaysCount]++;
-    }
+    public void IncrementTodaysCount() => this._birdsPerDay[this._todaysCount]++;
 
     public bool HasDayWithoutBirds() => Array.Exists(this._birdsPerDay, i => i == EMPTY_DAY);
 
@@ -30,7 +27,7 @@ class BirdCount
         int count = 0;
         foreach (int bird in this._birdsPerDay[0..numberOfDays])
         {
-            count = count + bird;
+            count += bird;
         }
         return count;
     }
