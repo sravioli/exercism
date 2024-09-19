@@ -43,9 +43,9 @@ public static class Languages
     public static bool IsUnique(List<string> languages)
     {
         bool isUnique = true;
-        foreach (string language in languages)
+        for (int i = 0; i < languages.Count && isUnique; i++)
         {
-            isUnique = languages.FindAll(lang => lang == language).Count == 1;
+            isUnique = languages.FindAll(lang => lang == languages[i]).Count == 1;
         }
         return isUnique;
     }
