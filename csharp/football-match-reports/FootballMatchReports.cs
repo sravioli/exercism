@@ -46,14 +46,10 @@ public static class PlayAnalyzer
                 return $"There are {supportersNumber} supporters at the match.";
             case string announcment when report is string:
                 return announcment;
+            case Injury injury when report is Injury:
+                return $"Oh no! {injury.GetDescription()} Medics are on the field.";
             case Incident incident when report is Incident:
-                switch (incident)
-                {
-                    case Injury:
-                        return $"Oh no! {incident.GetDescription()} Medics are on the field.";
-                    default:
-                        return incident.GetDescription();
-                }
+                return incident.GetDescription();
             case Manager manager when report is Manager:
                 return $"{manager.Name}{(manager?.Club != null ? $" ({manager!.Club})" : $"")}";
             default:
