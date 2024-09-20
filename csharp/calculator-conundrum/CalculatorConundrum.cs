@@ -2,6 +2,7 @@ using System;
 
 public static class SimpleCalculator
 {
+    private const string EMPTY_OP = "";
     private const string ADDITION = "+";
     private const string MULTIPLICATION = "*";
     private const string DIVISION = "/";
@@ -16,18 +17,18 @@ public static class SimpleCalculator
     {
         switch (operation)
         {
-            case var symbol when operation == null:
+            case null:
                 throw new ArgumentNullException("operation cannot be null!");
-            case string symbol when operation is "":
+            case EMPTY_OP:
                 throw new ArgumentException("Operation cannot be empty!");
-            case string symbol when operation is ADDITION:
-                return Format(operand1, operand2, symbol, SimpleOperation.Addition);
-            case string symbol when operation is MULTIPLICATION:
-                return Format(operand1, operand2, symbol, SimpleOperation.Multiplication);
-            case string symbol when operation is DIVISION:
+            case ADDITION:
+                return Format(operand1, operand2, ADDITION, SimpleOperation.Addition);
+            case MULTIPLICATION:
+                return Format(operand1, operand2, MULTIPLICATION, SimpleOperation.Multiplication);
+            case DIVISION:
                 return (operand2 == 0)
                     ? DIVISION_ERR
-                    : Format(operand1, operand2, symbol, SimpleOperation.Division);
+                    : Format(operand1, operand2, DIVISION, SimpleOperation.Division);
             default:
                 throw new ArgumentOutOfRangeException("Unknown operation!");
         }
