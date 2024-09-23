@@ -6,7 +6,7 @@ public static class Languages
     private static readonly string EXCITING_LANGUAGE = "C#";
     private static readonly int MAX_EXCITING_CAPACITY = 3;
 
-    public static List<string> NewList() => [];
+    public static List<string> NewList() => new List<string>();
 
     public static List<string> GetExistingLanguages() => ["C#", "Clojure", "Elm"];
 
