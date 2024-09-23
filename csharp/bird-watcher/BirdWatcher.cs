@@ -4,21 +4,17 @@ class BirdCount
 {
     private static readonly int EMPTY_DAY = 0;
     private static readonly int BUSY_DAY = 5;
+    private static readonly int[] lastWeekCount = new[] { 0, 2, 5, 3, 7, 8, 4 };
 
     private int[] _birdsPerDay;
-    private int _todaysCount;
 
-    public BirdCount(int[] birdsPerDay)
-    {
-        this._birdsPerDay = birdsPerDay;
-        this._todaysCount = birdsPerDay.Length - 1;
-    }
+    public BirdCount(int[] birdsPerDay) => this._birdsPerDay = birdsPerDay;
 
     public static int[] LastWeek() => new[] { 0, 2, 5, 3, 7, 8, 4 };
 
-    public int Today() => this._birdsPerDay[this._todaysCount];
+    public int Today() => this._birdsPerDay[^1];
 
-    public void IncrementTodaysCount() => this._birdsPerDay[this._todaysCount]++;
+    public void IncrementTodaysCount() => this._birdsPerDay[^1]++;
 
     public bool HasDayWithoutBirds() => Array.Exists(this._birdsPerDay, i => i == EMPTY_DAY);
 
