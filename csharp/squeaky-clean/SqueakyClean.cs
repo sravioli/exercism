@@ -18,20 +18,16 @@ public static class Identifier
         {
             switch (ch)
             {
-                case char when ch == DASH_CH:
-                    shouldUppercaseNextChar = true;
-                    break;
-                case char when shouldUppercaseNextChar:
-                    stringBuilder.Append(char.ToUpper(ch));
-                    shouldUppercaseNextChar = false;
-                    break;
                 case char when ch >= GREEK_LOWERCASE_START_CH && ch <= GREEK_LOWERCASE_END_CH:
                     break;
-                case char when char.IsControl(ch):
-                    stringBuilder.Append(CTRL_STR);
+                case char when shouldUppercaseNextChar:
+                    stringBuilder.Append(char.ToUpperInvariant(ch));
                     break;
                 case char when char.IsWhiteSpace(ch):
                     stringBuilder.Append(UNDERSCORE_CH);
+                    break;
+                case char when char.IsControl(ch):
+                    stringBuilder.Append(CTRL_STR);
                     break;
                 case char when char.IsLetter(ch):
                     stringBuilder.Append(ch);
@@ -39,6 +35,7 @@ public static class Identifier
                 default:
                     break;
             }
+            shouldUppercaseNextChar = ch == DASH_CH;
         }
         return stringBuilder.ToString();
     }
