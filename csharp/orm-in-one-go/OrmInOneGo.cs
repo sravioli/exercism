@@ -11,9 +11,9 @@ public class Orm
 
     public void Write(string data)
     {
-        database.BeginTransaction();
         using (database)
         {
+            database.BeginTransaction();
             database.Write(data);
             database.EndTransaction();
         }
@@ -21,15 +21,15 @@ public class Orm
 
     public bool WriteSafely(string data)
     {
-        database.BeginTransaction();
         using var db = database;
         try
         {
+            db.BeginTransaction();
             db.Write(data);
             db.EndTransaction();
             return true;
         }
-        catch
+        catch (InvalidOperationException)
         {
             database.Dispose();
             return false;
