@@ -14,7 +14,7 @@ public class ProductionRemoteControlCar : IRemoteControlCar, IComparable<Product
     public int NumberOfVictories { get; set; }
 
     public int CompareTo(ProductionRemoteControlCar other) =>
-        other == null ? NumberOfVictories : NumberOfVictories - other.NumberOfVictories;
+        other == null ? 1 : NumberOfVictories - other.NumberOfVictories;
 
     public void Drive() => DistanceTravelled += 10;
 }
@@ -35,9 +35,7 @@ public static class TestTrack
         ProductionRemoteControlCar prc2
     )
     {
-        List<ProductionRemoteControlCar> rankedCars = new List<ProductionRemoteControlCar>(
-            [prc1, prc2]
-        );
+        List<ProductionRemoteControlCar> rankedCars = [prc1, prc2];
         rankedCars.Sort();
         return rankedCars;
     }
