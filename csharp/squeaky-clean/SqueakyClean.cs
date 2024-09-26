@@ -1,14 +1,15 @@
 using System;
+using System.Data;
 using System.Text;
 
 public static class Identifier
 {
     private const char DASH_CH = '-';
-    private const char GREEK_LOWERCASE_START_CH = 'α';
-    private const char GREEK_LOWERCASE_END_CH = 'ω';
+    private const char GREEK_LOWERCASE_ALPHA = 'α';
+    private const char GREEK_LOWERCASE_OMEGA = 'ω';
 
     private const char UNDERSCORE_CH = '_';
-    private const string CTRL_STR = "CTRL";
+    private static readonly char[] CTRL_STR = ['C', 'T', 'R', 'L'];
 
     public static string Clean(string identifier)
     {
@@ -18,7 +19,7 @@ public static class Identifier
         {
             switch (ch)
             {
-                case char when ch >= GREEK_LOWERCASE_START_CH && ch <= GREEK_LOWERCASE_END_CH:
+                case char when char.IsBetween(ch, GREEK_LOWERCASE_ALPHA, GREEK_LOWERCASE_OMEGA):
                     break;
                 case char when shouldUppercaseNextChar:
                     stringBuilder.Append(char.ToUpperInvariant(ch));
