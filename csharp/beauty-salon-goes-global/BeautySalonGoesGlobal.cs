@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
-using Microsoft.VisualBasic;
 
 public enum Location
 {
@@ -67,12 +64,9 @@ public static class Appointment
     {
         TimeZoneInfo tz = TIMEZONES_IDS[location].timeZone;
         bool isDaylightSavingTime = tz.IsDaylightSavingTime(dt);
-        if (!isDaylightSavingTime)
+        for (var i = 0; i <= MAX_DAYLIGHT_CHANGES_DAYS && !isDaylightSavingTime; i++)
         {
-            for (var i = 0; i <= MAX_DAYLIGHT_CHANGES_DAYS && !isDaylightSavingTime; i++)
-            {
-                isDaylightSavingTime = tz.IsDaylightSavingTime(dt.AddDays(-i));
-            }
+            isDaylightSavingTime = tz.IsDaylightSavingTime(dt.AddDays(-i));
         }
         return isDaylightSavingTime;
     }
