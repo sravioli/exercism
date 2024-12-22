@@ -1,55 +1,50 @@
 using System;
+using System.Collections.Generic;
 
-public class FacialFeatures
+public class FacialFeatures(string eyeColor, decimal philtrumWidth)
 {
-    public string EyeColor { get; }
-    public decimal PhiltrumWidth { get; }
+    private string EyeColor { get; } = eyeColor;
+    private decimal PhiltrumWidth { get; } = philtrumWidth;
 
-    public FacialFeatures(string eyeColor, decimal philtrumWidth)
-    {
-        EyeColor = eyeColor;
-        PhiltrumWidth = philtrumWidth;
-    }
-    // TODO: implement equality and GetHashCode() methods
+    public override bool Equals(object obj) =>
+        ReferenceEquals(this, obj) || Equals(obj as FacialFeatures);
+
+    public bool Equals(FacialFeatures other) =>
+        other != null
+        && EyeColor.Equals(other.EyeColor)
+        && PhiltrumWidth.Equals(other.PhiltrumWidth);
+
+    public override int GetHashCode() => HashCode.Combine(EyeColor, PhiltrumWidth);
 }
 
-public class Identity
+public class Identity(string email, FacialFeatures facialFeatures)
 {
-    public string Email { get; }
-    public FacialFeatures FacialFeatures { get; }
+    private string Email { get; } = email;
+    private FacialFeatures FacialFeatures { get; } = facialFeatures;
 
-    public Identity(string email, FacialFeatures facialFeatures)
-    {
-        Email = email;
-        FacialFeatures = facialFeatures;
-    }
-    // TODO: implement equality and GetHashCode() methods
+    public override bool Equals(object obj) =>
+        ReferenceEquals(this, obj) || Equals(obj as Identity);
+
+    public bool Equals(Identity other) =>
+        other != null && Email.Equals(other.Email) && FacialFeatures.Equals(other.FacialFeatures);
+
+    public override int GetHashCode() => HashCode.Combine(Email, FacialFeatures);
 }
 
 public class Authenticator
 {
-    public static bool AreSameFace(FacialFeatures faceA, FacialFeatures faceB)
-    {
-        throw new NotImplementedException("Please implement the (static) Authenticator.AreSameFace() method");
-    }
+    private readonly HashSet<Identity> _identities = [];
+    private static readonly Identity Admin = new("admin@exerc.ism", new("green", 0.9m));
 
-    public bool IsAdmin(Identity identity)
-    {
-        throw new NotImplementedException("Please implement the Authenticator.IsAdmin() method");
-    }
+    public static bool AreSameFace(FacialFeatures faceA, FacialFeatures faceB) =>
+        faceA.Equals(faceB);
 
-    public bool Register(Identity identity)
-    {
-        throw new NotImplementedException("Please implement the Authenticator.Register() method");
-    }
+    public bool IsAdmin(Identity identity) => identity.Equals(Admin);
 
-    public bool IsRegistered(Identity identity)
-    {
-        throw new NotImplementedException("Please implement the Authenticator.IsRegistered() method");
-    }
+    public bool Register(Identity identity) => !IsRegistered(identity) && _identities.Add(identity);
 
-    public static bool AreSameObject(Identity identityA, Identity identityB)
-    {
-        throw new NotImplementedException("Please implement the Authenticator.AreSameObject() method");
-    }
+    public bool IsRegistered(Identity identity) => _identities.Contains(identity);
+
+    public static bool AreSameObject(Identity identityA, Identity identityB) =>
+        ReferenceEquals(identityA, identityB);
 }
