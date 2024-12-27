@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public readonly struct Coord(ushort x, ushort y)
 {
@@ -15,24 +16,20 @@ public readonly struct Coord(ushort x, ushort y)
     public override int GetHashCode() => HashCode.Combine(X, Y);
 }
 
-public readonly struct Plot(Coord nw, Coord ne, Coord sw, Coord se)
-    : IComparable<Plot>,
-        IEquatable<Plot>
+public readonly struct Plot(Coord nw, Coord ne, Coord sw, Coord se) : IEquatable<Plot>
 {
     private Coord NorthWest { get; } = nw;
     private Coord NorthEast { get; } = ne;
     private Coord SouthWest { get; } = sw;
     private Coord SouthEast { get; } = se;
 
-    private int Sum() => NorthWest.Sum() + NorthEast.Sum() + SouthWest.Sum() + SouthEast.Sum();
+    public int Sum() => NorthWest.Sum() + NorthEast.Sum() + SouthWest.Sum() + SouthEast.Sum();
 
     public bool Equals(Plot other) =>
         NorthWest.Equals(other.NorthWest)
         && NorthEast.Equals(other.NorthEast)
         && SouthWest.Equals(other.SouthWest)
         && SouthEast.Equals(other.SouthEast);
-
-    public int CompareTo(Plot other) => Sum() - other.Sum();
 
     public override bool Equals(object obj) => obj is Plot other && Equals(other);
 
@@ -54,9 +51,6 @@ public class ClaimsHandler
 
     public bool IsLastClaim(Plot plot) => ClaimedPlots[^1].Equals(plot);
 
-    public Plot GetClaimWithLongestSide()
-    {
-        ClaimedPlots.Sort();
-        return ClaimedPlots[^1];
-    }
+    public Plot GetClaimWithLongestSide() =>
+        ClaimedPlots.OrderByDescending(plot => plot.Sum()).First();
 }
