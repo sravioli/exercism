@@ -48,13 +48,13 @@ public class ClaimsHandler
 {
     private static readonly List<Plot> ClaimedPlots = [];
 
-    public static void StakeClaim(Plot plot) => ClaimedPlots.Add(plot);
+    public void StakeClaim(Plot plot) => ClaimedPlots.Add(plot);
 
-    public static bool IsClaimStaked(Plot plot) => ClaimedPlots.Contains(plot);
+    public bool IsClaimStaked(Plot plot) => ClaimedPlots.Contains(plot);
 
-    public static bool IsLastClaim(Plot plot) => ClaimedPlots[^1].Equals(plot);
+    public bool IsLastClaim(Plot plot) => ClaimedPlots[^1].Equals(plot);
 
-    public static Plot GetClaimWithLongestSide()
+    public Plot GetClaimWithLongestSide()
     {
         ClaimedPlots.Sort();
         return ClaimedPlots[^1];
