@@ -2,78 +2,57 @@ public class RemoteControlCar
 {
     public string CurrentSponsor { get; private set; }
 
-    private Speed currentSpeed;
+    public TelemetryHandler Telemetry { get; private set; }
+    private Speed _currentSpeed;
 
-    // TODO encapsulate the methods suffixed with "_Telemetry" in their own class
-    // dropping the suffix from the method name
-    public void Calibrate_Telemetry()
+    public RemoteControlCar() => Telemetry = new TelemetryHandler(this);
+
+    public class TelemetryHandler(RemoteControlCar car)
     {
+        private RemoteControlCar Car { get; } = car;
 
-    }
+        public void Calibrate() { }
 
-    public bool SelfTest_Telemetry()
-    {
-        return true;
-    }
+        public bool SelfTest() => true;
 
-    public void ShowSponsor_Telemetry(string sponsorName)
-    {
-        SetSponsor(sponsorName);
-    }
+        public void ShowSponsor(string sponsorName) => Car.SetSponsor(sponsorName);
 
-    public void SetSpeed_Telemetry(decimal amount, string unitsString)
-    {
-        SpeedUnits speedUnits = SpeedUnits.MetersPerSecond;
-        if (unitsString == "cps")
+        public void SetSpeed(decimal amount, string unitsString)
         {
-            speedUnits = SpeedUnits.CentimetersPerSecond;
+            var speedUnits = SpeedUnits.MetersPerSecond;
+            if (unitsString == "cps")
+            {
+                speedUnits = SpeedUnits.CentimetersPerSecond;
+            }
+            Car.SetSpeed(new Speed(amount, speedUnits));
         }
-
-        SetSpeed(new Speed(amount, speedUnits));
     }
 
-    public string GetSpeed()
-    {
-        return currentSpeed.ToString();
-    }
+    public string GetSpeed() => _currentSpeed.ToString();
 
-    private void SetSponsor(string sponsorName)
-    {
-        CurrentSponsor = sponsorName;
+    private void SetSponsor(string sponsorName) => CurrentSponsor = sponsorName;
 
-    }
-
-    private void SetSpeed(Speed speed)
-    {
-        currentSpeed = speed;
-    }
+    private void SetSpeed(Speed speed) => _currentSpeed = speed;
 }
 
-public enum SpeedUnits
+internal enum SpeedUnits
 {
-    MetersPerSecond,
-    CentimetersPerSecond
+    MetersPerSecond = 0,
+    CentimetersPerSecond = 1,
 }
 
-public struct Speed
+internal readonly struct Speed(decimal amount, SpeedUnits speedUnits)
 {
-    public decimal Amount { get; }
-    public SpeedUnits SpeedUnits { get; }
-
-    public Speed(decimal amount, SpeedUnits speedUnits)
-    {
-        Amount = amount;
-        SpeedUnits = speedUnits;
-    }
+    private decimal Amount { get; } = amount;
+    private SpeedUnits SpeedUnits { get; } = speedUnits;
 
     public override string ToString()
     {
-        string unitsString = "meters per second";
+        var unitsString = "meters per second";
         if (SpeedUnits == SpeedUnits.CentimetersPerSecond)
         {
             unitsString = "centimeters per second";
         }
-
         return Amount + " " + unitsString;
     }
 }
