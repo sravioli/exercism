@@ -48,11 +48,11 @@ internal readonly struct Speed(decimal amount, SpeedUnits speedUnits)
 
     public override string ToString()
     {
-        var unitsString = "meters per second";
+        var unitsString = "meters";
         if (SpeedUnits == SpeedUnits.CentimetersPerSecond)
         {
-            unitsString = "centimeters per second";
+            unitsString = "centimeters";
         }
-        return Amount + " " + unitsString;
+        return $"{Amount} {unitsString} per second";
     }
 }
