@@ -1,10 +1,13 @@
-public static class RedRemoteControlCarTeam
+namespace RedRemoteControlCarTeam
 {
     public class RemoteControlCar
     {
-        public RemoteControlCar(Motor motor, Chassis chassis, Telemetry telemetry, RunningGear runningGear)
-        {
-        }
+        public RemoteControlCar(
+            Motor motor,
+            Chassis chassis,
+            Telemetry telemetry,
+            RunningGear runningGear
+        ) { }
         // red members and API
     }
 
@@ -29,13 +32,11 @@ public static class RedRemoteControlCarTeam
     }
 }
 
-public static class BlueRemoteControlCarTeam
+namespace BlueRemoteControlCarTeam
 {
     public class RemoteControlCar
     {
-        public RemoteControlCar(Motor motor, Chassis chassis, Telemetry telemetry)
-        {
-        }
+        public RemoteControlCar(Motor motor, Chassis chassis, Telemetry telemetry) { }
         // blue members and API
     }
 
@@ -55,24 +56,30 @@ public static class BlueRemoteControlCarTeam
     }
 }
 
-public static class CarBuilder
+namespace Combined
 {
-    public static RedRemoteControlCarTeam.RemoteControlCar BuildRed()
-    {
-        return new RedRemoteControlCarTeam.RemoteControlCar(
-            new RedRemoteControlCarTeam.Motor(),
-            new RedRemoteControlCarTeam.Chassis(),
-            new RedRemoteControlCarTeam.Telemetry(),
-            new RedRemoteControlCarTeam.RunningGear()
-        );
-    }
+    using BlueTeam = BlueRemoteControlCarTeam;
+    using RedTeam = RedRemoteControlCarTeam;
 
-    public static BlueRemoteControlCarTeam.RemoteControlCar BuildBlue()
+    public static class CarBuilder
     {
-        return new BlueRemoteControlCarTeam.RemoteControlCar(
-            new BlueRemoteControlCarTeam.Motor(),
-            new BlueRemoteControlCarTeam.Chassis(),
-            new BlueRemoteControlCarTeam.Telemetry()
-        );
+        public static RedTeam.RemoteControlCar BuildRed()
+        {
+            return new RedTeam.RemoteControlCar(
+                new RedTeam.Motor(),
+                new RedTeam.Chassis(),
+                new RedTeam.Telemetry(),
+                new RedTeam.RunningGear()
+            );
+        }
+
+        public static BlueTeam.RemoteControlCar BuildBlue()
+        {
+            return new BlueTeam.RemoteControlCar(
+                new BlueTeam.Motor(),
+                new BlueTeam.Chassis(),
+                new BlueTeam.Telemetry()
+            );
+        }
     }
 }
