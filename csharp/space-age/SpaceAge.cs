@@ -1,48 +1,30 @@
-using System;
-
-public class SpaceAge
+public class SpaceAge(int seconds)
 {
-    public SpaceAge(int seconds)
-    {
-    }
+    private const double MercuryOrbitalPeriodInEarthYears = 0.2408467;
+    private const double VenusOrbitalPeriodInEarthYears = 0.61519726;
+    private const double MarsOrbitalPeriodInEarthYears = 1.8808158;
+    private const double JupiterOrbitalPeriodInEarthYears = 11.862615;
+    private const double SaturnOrbitalPeriodInEarthYears = 29.447498;
+    private const double UranusOrbitalPeriodInEarthYears = 84.016846;
+    private const double NeptuneOrbitalPeriodInEarthYears = 164.79132;
+    private const double OneYearInSeconds = 3.15576e+7;
 
-    public double OnEarth()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    private double CalculateAge(double orbitalPeriod = 1.0) =>
+        seconds / (OneYearInSeconds * orbitalPeriod);
 
-    public double OnMercury()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public double OnEarth() => CalculateAge();
 
-    public double OnVenus()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public double OnMercury() => CalculateAge(MercuryOrbitalPeriodInEarthYears);
 
-    public double OnMars()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public double OnVenus() => CalculateAge(VenusOrbitalPeriodInEarthYears);
 
-    public double OnJupiter()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public double OnMars() => CalculateAge(MarsOrbitalPeriodInEarthYears);
 
-    public double OnSaturn()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public double OnJupiter() => CalculateAge(JupiterOrbitalPeriodInEarthYears);
 
-    public double OnUranus()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public double OnSaturn() => CalculateAge(SaturnOrbitalPeriodInEarthYears);
 
-    public double OnNeptune()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public double OnUranus() => CalculateAge(UranusOrbitalPeriodInEarthYears);
+
+    public double OnNeptune() => CalculateAge(NeptuneOrbitalPeriodInEarthYears);
 }
