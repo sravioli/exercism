@@ -1,17 +1,36 @@
 using System;
+using System.Collections.Generic;
 
 public class Robot
 {
-    public string Name
+    private static readonly Random Rand = new(DateTime.Now.Millisecond);
+    private static readonly HashSet<string> RobotTracker = [];
+
+    public string Name { get; private set; } = GetUniqueName();
+
+    public void Reset() => Name = GetUniqueName();
+
+    private static string CreateName()
     {
-        get
+        var name = new char[5];
+        for (var i = 0; i < 2; i++)
         {
-            throw new NotImplementedException("You need to implement this method.");
+            name[i] = (char)Rand.Next('A', 'Z' + 1);
         }
+        for (var i = 2; i < 5; i++)
+        {
+            name[i] = (char)Rand.Next('0', '9' + 1);
+        }
+        return new string(name);
     }
 
-    public void Reset()
+    private static string GetUniqueName()
     {
-        throw new NotImplementedException("You need to implement this method.");
+        var robotName = CreateName();
+        while (!RobotTracker.Add(robotName))
+        {
+            robotName = CreateName();
+        }
+        return robotName;
     }
 }
