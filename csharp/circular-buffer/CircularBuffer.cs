@@ -1,29 +1,37 @@
 using System;
+using System.Collections.Generic;
 
-public class CircularBuffer<T>
+public class CircularBuffer<T>(int capacity)
 {
-    public CircularBuffer(int capacity)
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    private readonly Queue<T> _queue = new(capacity);
 
     public T Read()
     {
-        throw new NotImplementedException("You need to implement this method.");
+        if (!_queue.TryPeek(out T item))
+        {
+            throw new InvalidOperationException("Queue is empty");
+        }
+        _queue.Dequeue();
+        return item;
     }
 
     public void Write(T value)
     {
-        throw new NotImplementedException("You need to implement this method.");
+        if (_queue.Count == capacity)
+        {
+            throw new InvalidOperationException("Queue is full");
+        }
+        _queue.Enqueue(value);
     }
 
     public void Overwrite(T value)
     {
-        throw new NotImplementedException("You need to implement this method.");
+        if (_queue.Count == capacity)
+        {
+            _queue.Dequeue();
+        }
+        _queue.Enqueue(value);
     }
 
-    public void Clear()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public void Clear() => _queue.Clear();
 }
