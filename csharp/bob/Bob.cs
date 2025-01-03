@@ -1,17 +1,17 @@
+using System;
 using System.Linq;
+using static System.StringComparison;
 
 public static class Bob
 {
     public static string Response(string statement)
     {
-        if (string.IsNullOrEmpty(statement) || string.IsNullOrWhiteSpace(statement))
+        if (string.IsNullOrWhiteSpace(statement))
             return "Fine. Be that way!";
 
-        var s = statement.Trim();
-        var isAskingQuestion = s[^1] == '?';
+        var isAskingQuestion = statement.Trim().EndsWith('?');
         var isShouting =
-            s.Any(c => !(char.IsPunctuation(c) || char.IsDigit(c)) && char.IsAsciiLetter(c))
-            && s.Where(char.IsAsciiLetter).All(char.IsAsciiLetterUpper);
+            statement.Any(char.IsLetter) && statement.Equals(statement.ToUpperInvariant());
 
         return isShouting switch
         {
