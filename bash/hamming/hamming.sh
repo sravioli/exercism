@@ -51,10 +51,7 @@ function main() {
 
   declare -i count=0
   for ((i = 0; i < ${#first}; i++)); do
-    ch1="${first:$i:1}"
-    ch2="${second:$i:1}"
-
-    if [[ "${ch1}" != "${ch2}" ]]; then
+    if [[ "${first:$i:1}" != "${second:$i:1}" ]]; then
       count+=1
     fi
   done
