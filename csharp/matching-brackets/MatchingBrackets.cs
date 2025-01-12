@@ -25,10 +25,7 @@ public static class MatchingBrackets
                 continue;
             }
 
-            if (!stack.TryPeek(out var bracket))
-                return false;
-
-            if (c != bracket)
+            if (!stack.TryPeek(out var bracket) || c != bracket)
                 return false;
 
             stack.Pop();
