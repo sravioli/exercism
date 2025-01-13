@@ -4,9 +4,9 @@ function main() {
   local acronym
   local words
 
-  words="$(sed --expression='s/-/ /g' <(echo "$1") | tr --delete '[:punct:]' | tr '[:lower:]' '[:upper:]')"
+  words="$(echo "${1^^}" | sed -e's/-/ /g' | tr -d '[:punct:]')"
   for word in ${words}; do
-    acronym="${acronym}${word:0:1}"
+    acronym+="${word:0:1}"
   done
   echo "${acronym}"
 }
