@@ -2,7 +2,7 @@
 
 int steps(int start) {
   if (start <= 0) {
-    return -1;
+    return ERROR_VALUE;
   }
 
   int steps = 0;
