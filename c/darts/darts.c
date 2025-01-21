@@ -3,7 +3,7 @@
 #include <math.h>
 
 uint8_t score(coordinate_t coord) {
-  float distance = sqrt(coord.x * coord.x + coord.y * coord.y);
+  float distance = hypotf(coord.x, coord.y);
 
   if (distance >= 0 && distance <= 1) {
     return 10;
