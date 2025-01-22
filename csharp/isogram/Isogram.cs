@@ -1,9 +1,24 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public static class Isogram
 {
     public static bool IsIsogram(string word)
     {
-        throw new NotImplementedException("You need to implement this method.");
+        char[] appeared = new char[word.Length];
+        for (int i = 0; i < word.Length; i++)
+        {
+            var c = char.ToLower(word[i]);
+
+            if (!char.IsAsciiLetter(c))
+                continue;
+
+            if (appeared.Contains(c))
+                return false;
+
+            appeared[i] = c;
+        }
+
+        return true;
     }
 }
