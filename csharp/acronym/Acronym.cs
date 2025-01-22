@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Text;
 
 public static class Acronym
@@ -7,10 +6,10 @@ public static class Acronym
     public static string Abbreviate(string phrase)
     {
         var sb = new StringBuilder();
-        var words = phrase.Replace("-", " ").Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var words = phrase.Split([' ', '-', '_'], StringSplitOptions.RemoveEmptyEntries);
         foreach (var word in words)
         {
-            sb.Append(char.ToUpper(word.First(char.IsAsciiLetter)));
+            sb.Append(char.ToUpper(word[0]));
         }
         return sb.ToString();
     }
