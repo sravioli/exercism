@@ -1,57 +1,72 @@
 using System;
-using System.Diagnostics;
+using System.Numerics;
 
 public static class RealNumberExtension
 {
-    public static double Expreal(this int realNumber, RationalNumber r)
-    {
-        throw new NotImplementedException("You need to implement this extension method.");
-    }
+    public static double Expreal(this int realNumber, RationalNumber r) =>
+        Math.Pow(realNumber, (double)r.Numerator / r.Denominator);
 }
 
-public struct RationalNumber
+public struct RationalNumber(int numerator, int denominator)
 {
-    public RationalNumber(int numerator, int denominator)
-    {
-    }
+    public int Numerator { get; private set; } = numerator;
 
-    public static RationalNumber operator +(RationalNumber r1, RationalNumber r2)
-    {
-        throw new NotImplementedException("You need to implement this operator.");
-    }
+    public int Denominator { get; private set; } = denominator;
 
-    public static RationalNumber operator -(RationalNumber r1, RationalNumber r2)
-    {
-        throw new NotImplementedException("You need to implement this operator.");
-    }
+    public static RationalNumber operator +(RationalNumber r1, RationalNumber r2) =>
+        new RationalNumber(
+            (r1.Numerator * r2.Denominator + r2.Numerator * r1.Denominator),
+            (r1.Denominator * r2.Denominator)
+        ).Reduce();
 
-    public static RationalNumber operator *(RationalNumber r1, RationalNumber r2)
-    {
-        throw new NotImplementedException("You need to implement this operator.");
-    }
+    public static RationalNumber operator -(RationalNumber r1, RationalNumber r2) =>
+        new RationalNumber(
+            (r1.Numerator * r2.Denominator - r2.Numerator * r1.Denominator),
+            (r1.Denominator * r2.Denominator)
+        ).Reduce();
+
+    public static RationalNumber operator *(RationalNumber r1, RationalNumber r2) =>
+        new RationalNumber(r1.Numerator * r2.Numerator, r1.Denominator * r2.Denominator).Reduce();
 
     public static RationalNumber operator /(RationalNumber r1, RationalNumber r2)
     {
-        throw new NotImplementedException("You need to implement this operator.");
+        if (r2.Numerator == 0)
+            throw new DivideByZeroException("Cannot divide by zero.");
+
+        return new RationalNumber(
+            (r1.Numerator * r2.Denominator),
+            (r2.Numerator * r1.Denominator)
+        ).Reduce();
     }
 
     public RationalNumber Abs()
     {
-        throw new NotImplementedException("You need to implement this method.");
+        Numerator = Math.Abs(Numerator);
+        Denominator = Math.Abs(Denominator);
+        return Reduce();
     }
 
     public RationalNumber Reduce()
     {
-        throw new NotImplementedException("You need to implement this method.");
+        var gcd = (int)BigInteger.GreatestCommonDivisor(Numerator, Denominator);
+        gcd = Denominator < 0 ? -gcd : gcd;
+        Numerator /= gcd;
+        Denominator /= gcd;
+        return this;
     }
 
     public RationalNumber Exprational(int power)
     {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+        if (power < 0)
+        {
+            return new RationalNumber(
+                (int)Math.Pow(Denominator, -power),
+                (int)Math.Pow(Numerator, -power)
+            ).Reduce();
+        }
 
-    public double Expreal(int baseNumber)
-    {
-        throw new NotImplementedException("You need to implement this method.");
+        Numerator = (int)Math.Pow(Numerator, power);
+        Denominator = (int)Math.Pow(Denominator, power);
+        return Reduce();
     }
 }
