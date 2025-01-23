@@ -36,7 +36,7 @@ public static class RunLengthEncoding
             return input;
 
         var sb = new StringBuilder();
-        foreach (Match match in Regex.Matches(input, @"(\d*)(.)"))
+        foreach (Match match in Regex.Matches(input, @"(\d*)(\D)"))
         {
             GroupCollection groups = match.Groups;
             var num = int.Parse(groups[1].Value == string.Empty ? "1" : groups[1].Value);
