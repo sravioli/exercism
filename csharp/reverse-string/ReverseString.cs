@@ -3,6 +3,5 @@ using System.Linq;
 
 public static class ReverseString
 {
-    public static string Reverse(string input) =>
-        input.ToCharArray().Reverse().Aggregate(string.Empty, (current, c) => current + c);
+    public static string Reverse(string input) => new(input.ToCharArray().Reverse().ToArray());
 }
