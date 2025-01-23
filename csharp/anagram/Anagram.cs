@@ -1,14 +1,25 @@
 using System;
+using System.Linq;
 
 public class Anagram
 {
-    public Anagram(string baseWord)
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    private static string _word;
+
+    public Anagram(string baseWord) => _word = baseWord.ToLower();
 
     public string[] FindAnagrams(string[] potentialMatches)
     {
-        throw new NotImplementedException("You need to implement this method.");
+        string w;
+        return potentialMatches
+            .Where(word =>
+            {
+                w = word.ToLower();
+                return w.All(c =>
+                        _word.Contains(c) && w.Count(ch => ch == c) == _word.Count(ch => ch == c)
+                    )
+                    && w.Length == _word.Length
+                    && !w.Equals(_word, StringComparison.InvariantCultureIgnoreCase);
+            })
+            .ToArray();
     }
 }
