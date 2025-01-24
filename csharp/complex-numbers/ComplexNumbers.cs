@@ -1,53 +1,46 @@
 using System;
+using System.Threading;
 
-public struct ComplexNumber
+public struct ComplexNumber(double real, double imaginary)
 {
-    public ComplexNumber(double real, double imaginary)
-    {
-    }
+    private double _real = real;
+    private double _imag = imaginary;
 
-    public double Real()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public double Real() => _real;
 
-    public double Imaginary()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public double Imaginary() => _imag;
 
-    public ComplexNumber Mul(ComplexNumber other)
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public ComplexNumber Mul(ComplexNumber other) =>
+        new(
+            _real * other.Real() - _imag * other.Imaginary(),
+            _imag * other.Real() + _real * other.Imaginary()
+        );
 
-    public ComplexNumber Add(ComplexNumber other)
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public ComplexNumber Mul(int other) => new(_real * other, _imag * other);
 
-    public ComplexNumber Sub(ComplexNumber other)
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public ComplexNumber Add(ComplexNumber other) =>
+        new(_real + other.Real(), _imag + other.Imaginary());
+
+    public ComplexNumber Add(int other) => new(_real + other, _imag);
+
+    public ComplexNumber Sub(ComplexNumber other) =>
+        new(_real - other.Real(), _imag - other.Imaginary());
 
     public ComplexNumber Div(ComplexNumber other)
     {
-        throw new NotImplementedException("You need to implement this method.");
+        var pow = Math.Pow(other.Real(), 2) + Math.Pow(other.Imaginary(), 2);
+        return new ComplexNumber(
+            (_real * other.Real() + _imag * other.Imaginary()) / pow,
+            (_imag * other.Real() - _real * other.Imaginary()) / pow
+        );
     }
 
-    public double Abs()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public ComplexNumber Div(int other) => new(_real / other, _imag / other);
 
-    public ComplexNumber Conjugate()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
-    
-    public ComplexNumber Exp()
-    {
-        throw new NotImplementedException("You need to implement this method.");
-    }
+    public double Abs() => Math.Sqrt(_real * _real + _imag * _imag);
+
+    public ComplexNumber Conjugate() => new(_real, -_imag);
+
+    public ComplexNumber Exp() =>
+        new(Math.Exp(_real) * Math.Cos(_imag), Math.Exp(_real) * Math.Sin(_imag));
 }
