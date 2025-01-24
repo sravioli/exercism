@@ -38,8 +38,9 @@ public static class RunLengthEncoding
         var sb = new StringBuilder();
         foreach (Match match in Regex.Matches(input, @"(\d*)(\D)"))
         {
-            GroupCollection groups = match.Groups;
-            var num = int.Parse(groups[1].Value == string.Empty ? "1" : groups[1].Value);
+            var num = int.Parse(
+                match.Groups[1].Value == string.Empty ? "1" : match.Groups[1].Value
+            );
             var letter = char.Parse(match.Groups[2].Value);
             sb.Append(letter, num);
         }
