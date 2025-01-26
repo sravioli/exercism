@@ -7,9 +7,10 @@ public static class CollatzConjecture
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(number);
 
         var steps = 0;
-        while (number > 1)
+        var n = number;
+        while (n > 1)
         {
-            number = number % 2 == 0 ? number / 2 : (3 * number) + 1;
+            n = n % 2 == 0 ? n / 2 : (3 * n) + 1;
             steps++;
         }
         return steps;
