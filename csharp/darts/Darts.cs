@@ -6,14 +6,12 @@ public static class Darts
     {
         var hypotenuse = Math.Sqrt(x * x + y * y);
 
-        var score = hypotenuse switch
+        return hypotenuse switch
         {
             <= 10 and > 5 => 1,
             <= 5 and > 1 => 5,
             <= 1 => 10,
             _ => 0,
         };
-
-        return score;
     }
 }
