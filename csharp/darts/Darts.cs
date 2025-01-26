@@ -4,6 +4,16 @@ public static class Darts
 {
     public static int Score(double x, double y)
     {
-       throw new NotImplementedException("You need to implement this function");
+        var hypotenuse = Math.Sqrt(x * x + y * y);
+
+        var score = hypotenuse switch
+        {
+            <= 10 and > 5 => 1,
+            <= 5 and > 1 => 5,
+            <= 1 => 10,
+            _ => 0,
+        };
+
+        return score;
     }
 }
