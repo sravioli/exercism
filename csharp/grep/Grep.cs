@@ -39,7 +39,6 @@ public static class Grep
             }
         }
 
-        var sb = new StringBuilder();
-        return sb.AppendJoin('\n', matches.Distinct()).ToString();
+        return string.Join('\n', matches.Distinct());
     }
 }
