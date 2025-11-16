@@ -24,10 +24,9 @@ public static class PerfectNumbers
 
     return number switch
     {
-      int n when n == sum => Classification.Perfect,
       int n when n < sum => Classification.Abundant,
       int n when n > sum => Classification.Deficient,
-      _ => throw new InvalidOperationException(),
+      _ => Classification.Perfect,
     };
   }
 }
